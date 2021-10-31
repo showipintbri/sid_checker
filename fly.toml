@@ -1,0 +1,14 @@
+app = "sid_checker"
+
+[build]
+  builtin = "python"
+
+kill_signal = "SIGINT"
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
