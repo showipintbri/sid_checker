@@ -106,4 +106,4 @@ except:
 create_db()
 build_db()
 
-sid_checker.app.run(host='0.0.0.0', port=8080)
+sid_checker.app.run()
