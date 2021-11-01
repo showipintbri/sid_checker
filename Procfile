@@ -1,1 +1,1 @@
-web: gunicorn -b 0.0.0.0:8080 build_db:create_db
+web: gunicorn build_db:create_db
