@@ -12,21 +12,23 @@ filename_md5 = filename+'.md5'
 et_url = 'https://rules.emergingthreats.net/open/suricata-5.0/'
 
 
-# Create the database
-if os.path.exists('./database.db') == False:
-    try:
-        conn = sql.connect('./database.db')
-        print("Opened database successfully")
-        conn.execute('CREATE TABLE sids (sid INT, rule TEXT)')
-        conn.commit()
-        print("Table created successfully")
-        conn.close()
-    except:
-        pass
-else:
-    pass
-
 ### Define functions
+
+# Create the database
+def create_db():
+    if os.path.exists('./database.db') == False:
+        try:
+            conn = sql.connect('./database.db')
+            print("Opened database successfully")
+            conn.execute('CREATE TABLE sids (sid INT, rule TEXT)')
+            conn.commit()
+            print("Table created successfully")
+            conn.close()
+        except:
+            pass
+    else:
+        pass
+
 
 # Extract
 def extract(file):
@@ -101,6 +103,7 @@ try:
 except:
     print('Error: Couldn\'t compare, hash input error possible.')
 
+create_db()
 build_db()
 
 sid_checker.app.run()
