@@ -1,11 +1,11 @@
 # Tony's Suricata sid Checker
 [![Fly Deploy](https://github.com/showipintbri/sid_checker/actions/workflows/main.yml/badge.svg)](https://github.com/showipintbri/sid_checker/actions/workflows/main.yml)
 
-I have often found myself looking at Suricata logs via a siem or some other manner and not having access to the actual rule/signature. I also, wanted a way to pivot from the sim by clicking on a field and show the rule. This web app lets you do both. You can self host or use my public one.
+I have often found myself looking at Suricata logs via a siem or some other manner and not having access to the actual rule/signature. I also, wanted a way to pivot from the siem by clicking on a field and show the rule. This web app is a resource to do both. You can self host or use my public one.
 
 This web app is a simple Flask app that will take a SID as input and search a local database for the rule.
 
-She's ugly but she works.
+It's ugly but it works.
 
 ### NOTES:
 - This is statically pulling `https://rules.emergingthreats.net/open/suricata-5.0/emerging-all.rules.zip`
