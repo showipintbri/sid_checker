@@ -179,7 +179,7 @@ def start_app():
     et_hash = dl_md5(url_md5)
     comp_hashes(file_hash,et_hash,filename)
     build_db(db_name)
-    app.run(host='0.0.0.0', port=8080)
+    app.run(port=8080)
 
 if __name__ == '__main__':
     start_app()
