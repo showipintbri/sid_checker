@@ -17,4 +17,4 @@ kill_timeout = 5
 
   [[services.ports]]
     handlers = ["http"]
-    port = "80"
+    port = 80
