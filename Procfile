@@ -1,1 +1,1 @@
-web: gunicorn 'build_db:start_app()'
+web: gunicorn 'build_db:main()'
