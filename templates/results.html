@@ -6,6 +6,11 @@
 	  <br>
 	  {{ rows[0][1] }}
 	  <br>
-      
+      <h2>References:</h2>
+	  {% set ref_list = rows[0][2].split(',') %}
+	  {% for i in ref_list %}
+	   	  {% set ref_link = i.strip("[]\' ") %}
+		  <ul><a href="https://{{ ref_link }}" target="_newwindow">{{ ref_link }}</a></ul>
+	  {% endfor %}
    </body>
 </html>
