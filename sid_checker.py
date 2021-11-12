@@ -1,17 +1,22 @@
-from flask import Flask, render_template, request
 import sqlite3 as sql
 import os.path
+from flask import Flask, render_template, request
+
+# Variables
+db_name = './database.db'
+
+### Flask app
 
 app = Flask(__name__)
 
 def db_check(sid_id):
-    if os.path.exists('database.db') == False:
+    if os.path.exists(db_name) == False:
         print('ERROR: Can\'t find DB file')
     else:
-        conn = sql.connect('database.db')
+        conn = sql.connect(db_name)
         cur = conn.cursor()
         try:
-            var = cur.execute('''SELECT sid, rule FROM sids WHERE sid=?;''', (sid_id,))
+            var = cur.execute('''SELECT sid, rule, ref FROM sids WHERE sid=?;''', (sid_id,))
             rows = var.fetchall()
             cur.close()
             conn.close()
@@ -48,8 +53,7 @@ def search():
             return render_template('error.html', sid_id=sid_id)
     else:
         print('ERROR:1b something when wrong')
-    
+
 
 if __name__ == '__main__':
-   app.run(host='0.0.0.0', port=8080)
-
+    app.run(host='0.0.0.0', port=8080)
