@@ -4,8 +4,7 @@ import hashlib
 import re
 from zipfile import ZipFile
 import os.path
-# import sid_checker
-from flask import Flask, render_template, request
+import sid_checker
 
 
 ### Define functions
@@ -16,7 +15,7 @@ def create_db(db_name):
         try:
             conn = sql.connect(db_name)
             print("Opened database successfully")
-            conn.execute('CREATE TABLE sids (sid INT, rule TEXT)')
+            conn.execute('CREATE TABLE sids (sid INT, rule TEXT, ref TEXT)')
             conn.commit()
             print("Table created successfully")
             conn.close()
@@ -101,9 +100,14 @@ def build_db(db_name):
             if str(clean_line) != '':
                 sid_regex = re.compile('sid:(\d+);')
                 sid = sid_regex.search(str(clean_line))
+                ref_regex = re.compile('reference:url,(\S*);')
+                ref = ref_regex.findall(str(clean_line))
                 if sid != None:
                     sid_num = sid.group(1)
-                    conn.execute('INSERT INTO sids VALUES (?, ?)', (int(sid_num), str(clean_line)))
+                    if ref != None:
+                        conn.execute('INSERT INTO sids (sid, rule, ref) VALUES (?, ?, ?)', (int(sid_num), str(clean_line), str(ref)))
+                    else:
+                        conn.execute('INSERT INTO sids (sid, rule) VALUES (?, ?)', (int(sid_num), str(clean_line)))
                 else:
                     pass
             else:
@@ -122,64 +126,14 @@ et_url = 'https://rules.emergingthreats.net/open/suricata-5.0/'
 url = et_url+filename
 url_md5 = et_url+filename_md5
 
-
-### Flask app
-
-app = Flask(__name__)
-
-def db_check(sid_id):
-    if os.path.exists(db_name) == False:
-        print('ERROR: Can\'t find DB file')
-    else:
-        conn = sql.connect(db_name)
-        cur = conn.cursor()
-        try:
-            var = cur.execute('''SELECT sid, rule FROM sids WHERE sid=?;''', (sid_id,))
-            rows = var.fetchall()
-            cur.close()
-            conn.close()
-            return rows
-        except:
-            print('ERROR:1a something when wrong')
-            cur.close()
-            conn.close()
-            return render_template('error.html', sid_id=sid_id) #Change this to an error page
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/search', methods=['POST', 'GET'])
-def search():
-    if request.method == 'POST':
-        sid_id = request.form['sid_id']
-        print(f'POST: {sid_id}')
-        rows = db_check(sid_id)
-        if rows != []:
-            return render_template('results.html', rows=rows)
-        else:
-            return render_template('error.html', sid_id=sid_id)
-    elif request.method == 'GET':
-        sid_id = request.args.get('sid_id')
-        print(f'GET: {sid_id}')
-        db_check(sid_id)
-        rows = db_check(sid_id)
-        if rows != []:
-            return render_template('results.html', rows=rows)
-        else:
-            return render_template('error.html', sid_id=sid_id)
-    else:
-        print('ERROR:1b something when wrong')
-    
-def start_app():
-#    app.run(debug=True)
+   
+def main():
     create_db(db_name)
     file_hash = dl_all_rules(url,filename)
     et_hash = dl_md5(url_md5)
     comp_hashes(file_hash,et_hash,filename)
     build_db(db_name)
-    app.run(port=8080)
+    sid_checker.app.run(host='0.0.0.0', port=8080)
 
 if __name__ == '__main__':
-    start_app()
+    main()
