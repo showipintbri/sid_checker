@@ -1,6 +1,7 @@
 import sqlite3 as sql
 import os.path
 from flask import Flask, render_template, request
+import waitress
 
 # Variables
 db_name = './database.db'
@@ -55,5 +56,6 @@ def search():
         print('ERROR:1b something when wrong')
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0')
+#     waitress.serve(app, host='0.0.0.0' port=5000)
