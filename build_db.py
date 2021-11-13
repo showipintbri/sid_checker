@@ -133,7 +133,7 @@ def main():
     et_hash = dl_md5(url_md5)
     comp_hashes(file_hash,et_hash,filename)
     build_db(db_name)
-    sid_checker.app.run(host='0.0.0.0', port=8080)
+    sid_checker.app.run()
 
 if __name__ == '__main__':
     main()
