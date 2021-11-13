@@ -56,6 +56,6 @@ def search():
         print('ERROR:1b something when wrong')
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 #     app.run(host='0.0.0.0')
-    waitress.serve(app, host='0.0.0.0' port=5000)
+#     waitress.serve(app, host='0.0.0.0' port=5000)
