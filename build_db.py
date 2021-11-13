@@ -4,7 +4,7 @@ import hashlib
 import re
 from zipfile import ZipFile
 import os.path
-import sid_checker
+# import sid_checker
 
 
 ### Define functions
@@ -133,7 +133,7 @@ def main():
     et_hash = dl_md5(url_md5)
     comp_hashes(file_hash,et_hash,filename)
     build_db(db_name)
-    sid_checker.app.run(host='0.0.0.0')
+#     sid_checker.app.run(host='0.0.0.0')
 
 if __name__ == '__main__':
     main()
