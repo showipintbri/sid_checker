@@ -4,7 +4,7 @@ import hashlib
 import re
 from zipfile import ZipFile
 import os.path
-import sid_checker
+# import sid_checker
 
 
 ### Define functions
