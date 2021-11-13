@@ -7,7 +7,7 @@ kill_signal = "SIGINT"
 kill_timeout = 15
 
 [[services]]
-  internal_port = 8080
+  internal_port = 5000
   protocol = "tcp"
 
   [services.concurrency]
