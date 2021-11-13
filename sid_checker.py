@@ -55,5 +55,5 @@ def search():
         print('ERROR:1b something when wrong')
 
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
