@@ -36,7 +36,7 @@ def index():
 def search():
     if request.method == 'POST':
         sid_id = request.form['sid_id']
-        print(f'POST: {sid_id}')
+#         print(f'POST: {sid_id}')
         rows = db_check(sid_id)
         if rows != []:
             return render_template('results.html', rows=rows)
@@ -44,7 +44,7 @@ def search():
             return render_template('error.html', sid_id=sid_id)
     elif request.method == 'GET':
         sid_id = request.args.get('sid_id')
-        print(f'GET: {sid_id}')
+#         print(f'GET: {sid_id}')
         db_check(sid_id)
         rows = db_check(sid_id)
         if rows != []:
